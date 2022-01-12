@@ -1,7 +1,10 @@
 class MCommand():
-    Modules : List[]
-    Sprt : str = ' '
+    Modules : List[MModule]
+    SprtInArg : str = ','
     ModSprt : str = '.'
+
+    def IncludeModule(self,module:MModule):
+        self.Modules.append(module)
 
     def ExecuteCommand(self,cmd:str):
         pass
@@ -9,20 +12,22 @@ class MCommand():
     def EncodeWords(self,word:str):
         level : int = 0
         args : List[str] = []
-        modFrag : bool = False
-
+        #std.print("aaa")
         args.append('')
         for w in word:
             if w == self.ModSprt:
-                modFrag = True
-            elif modFrag == True && level == 0:
-                args[0] = args[0] + w
-
-            if w == self.Sprt && level != 0:
                 level = level + 1
-            elif w == ''
+                continue
+            elif w == '(' || w == ')':
+                level = level + 1
+                continue
+            elif w == self.SprtInArg:
+                level = level + 1
+                continue
+            args[level] = args[level] + w
 
-        pass
+        return args
+
 
 
 class MModule():
@@ -35,6 +40,8 @@ class MModule():
 class Std(MModule):
     Name = "std"
 
-    def ExecuteCommand(self, cmd: str, args: List[str]):
-        for arg in args:
-            if cmd == 'print'
+    def ExecuteCommand(self,args: List[str]):
+        cmd : str = args[1]
+        if cmd == 'print':
+            print(args[2])
+        elif cmd == 'help'
