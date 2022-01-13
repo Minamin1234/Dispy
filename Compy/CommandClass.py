@@ -3,10 +3,18 @@ class MCommand():
     SprtInArg : str = ','
     ModSprt : str = '.'
 
+    def __init__(self):
+        newmod = Std()
+        self.IncludeModule(newmod)
+
     def IncludeModule(self,module:MModule):
         self.Modules.append(module)
 
     def ExecuteCommand(self,cmd:str):
+        args : List[str] = self.EncodeWords(cmd)
+        for mod in self.Modules:
+            if mod.Name == args[0]:
+                mod.ExecuteCommand(self,cmd : str,args : List[str]):
         pass
     
     def EncodeWords(self,word:str):
@@ -51,4 +59,5 @@ class Std(MModule):
         cmd : str = args[1]
         if cmd == 'print':
             print(args[2])
-        elif cmd == 'help'
+        elif cmd == 'help':
+            print('a')

@@ -1,5 +1,7 @@
+import CommandClass
+
 cmd:str = ""
+mc = CommandClass.MCommand()
+
 while True:  
-    print("Hello")
-    cmd = input()
-    print("/" + cmd)
+    mc.
