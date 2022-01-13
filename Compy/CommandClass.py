@@ -32,6 +32,10 @@ class MCommand():
 
 class MModule():
     Name : str = "module"
+    Commands : List[str]
+
+    def AddCommand(self,cmd : str):
+        self.Commands.append(cmd)
 
     def ExecuteCommand(self,cmd : str,args : List[str]):
         for arg in args:
@@ -39,6 +43,9 @@ class MModule():
 
 class Std(MModule):
     Name = "std"
+
+    def __init__(self):
+        pass
 
     def ExecuteCommand(self,args: List[str]):
         cmd : str = args[1]
