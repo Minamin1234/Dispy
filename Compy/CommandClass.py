@@ -1,63 +1,46 @@
-class MCommand():
-    Modules : List[MModule]
-    SprtInArg : str = ','
-    ModSprt : str = '.'
+from typing import NoReturn as void
 
-    def __init__(self):
-        newmod = Std()
-        self.IncludeModule(newmod)
+class MCommand:
+    Modules:str = []
+    SprtModule:str = "."
+    SprtInArg:str = ","
 
-    def IncludeModule(self,module:MModule):
-        self.Modules.append(module)
-
-    def ExecuteCommand(self,cmd:str):
-        args : List[str] = self.EncodeWords(cmd)
-        for mod in self.Modules:
-            if mod.Name == args[0]:
-                mod.ExecuteCommand(self,cmd : str,args : List[str]):
+    def __init__(self) -> void:
         pass
-    
-    def EncodeWords(self,word:str):
-        level : int = 0
-        args : List[str] = []
-        #std.print("aaa")
-        args.append('')
-        for w in word:
-            if w == self.ModSprt:
+
+    def IncludeModule(self,module:MModule) -> void:
+        pass
+
+    def ExecuteCommand(self,cmd:str) -> void:
+        level:int = 0
+        args:str = [""]
+        for w in cmd:
+            if w == self.SprtModule:
                 level = level + 1
-                continue
-            elif w == '(' || w == ')':
-                level = level + 1
+                args.append("")
                 continue
             elif w == self.SprtInArg:
                 level = level + 1
+                args.append("")
                 continue
             args[level] = args[level] + w
+        
+        for module in self.Modules:
+            if args[0] == module.ModuleName:
+                module.ExecuteCommand(args)
+        return
 
-        return args
+class MModule:
+    ModuleName:str = "module"
 
-
-
-class MModule():
-    Name : str = "module"
-    Commands : List[str]
-
-    def AddCommand(self,cmd : str):
-        self.Commands.append(cmd)
-
-    def ExecuteCommand(self,cmd : str,args : List[str]):
-        for arg in args:
-            if cmd == ''
-
-class Std(MModule):
-    Name = "std"
-
-    def __init__(self):
+    def __init__(self) -> void:
         pass
 
-    def ExecuteCommand(self,args: List[str]):
-        cmd : str = args[1]
-        if cmd == 'print':
-            print(args[2])
-        elif cmd == 'help':
-            print('a')
+    def ExecuteCommand(self,args:str) -> bool:
+        pass
+
+class MStd(MModule):
+    def __init_subclass__(cls) -> void:
+        super(MStd,self).__init_subclass__()
+        self.ModuleName = "std"
+

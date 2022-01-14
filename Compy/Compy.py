@@ -1,7 +1,6 @@
-import CommandClass
 
-cmd:str = ""
-mc = CommandClass.MCommand()
-
-while True:  
-    mc.
+ary:str = []
+ary.append('a')
+ary.append('a')
+print(ary)
+print("aaaaa")
