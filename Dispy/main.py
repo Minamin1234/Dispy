@@ -15,8 +15,8 @@ async def on_message(message):
     if message.author.bot:
         return
     if message.content.startswith(CommandWord):
-        CommandDevice.SetMsg(message)
-        word:str = message.content.rstrip("!c ")
-        CommandDevice.Execute(word)
+        word:str = message.content.lstrip("!c ")
+        result:str = CommandDevice.Execute(word)
+        await message.channel.send(result)
 
 client.run(Token)
