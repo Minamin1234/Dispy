@@ -24,15 +24,15 @@ async def on_message(message):
         args:List[str] = CommandDevice.DecodeArgs(word)
         CommandDevice.SetMsg(message)
         result:str = CommandDevice.Execute(word)
-        if args[1] == "dev":
-            if args[2] == "send":
-                await message.channel.send(str(args[3]))
+        if args[0] == "dev":
+            if args[1] == "send":
+                await message.channel.send(str(args[2]))
                 return
-            elif args[2] == "sendall":
+            elif args[1] == "sendall":
                 return
-            elif args[2] == "sendto":
+            elif args[1] == "sendto":
                 return
-            elif args[2] == "help":
+            elif args[1] == "help":
                 result = CommandDevice.Execute(word)
         await message.channel.send(">>" + str(result))
 
