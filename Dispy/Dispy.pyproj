@@ -21,7 +21,15 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Dispy.py" />
     <Compile Include="main.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Compy\Compy.pyproj">
+      <Name>Compy</Name>
+      <Project>{6078ad07-8a9f-446a-a6f9-db55d498067a}</Project>
+      <Private>True</Private>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
