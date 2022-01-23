@@ -22,9 +22,18 @@ async def on_message(message):
     if message.content.startswith(CommandWord):
         word:str = message.content.lstrip(CommandWord)
         args:List[str] = CommandDevice.DecodeArgs(word)
-
         CommandDevice.SetMsg(message)
         result:str = CommandDevice.Execute(word)
+        if args[1] == "dev":
+            if args[2] == "send":
+                await message.channel.send(str(args[3]))
+                return
+            elif args[2] == "sendall":
+                return
+            elif args[2] == "sendto":
+                return
+            elif args[2] == "help":
+                result = CommandDevice.Execute(word)
         await message.channel.send(">>" + str(result))
 
 client.run(Token)
