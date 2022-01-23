@@ -5,8 +5,6 @@ VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Dispy", "Dispy\Dispy.pyproj", "{358688A8-438D-408D-B677-A150D316DD38}"
 EndProject
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Compy", "Compy\Compy.pyproj", "{6078AD07-8A9F-446A-A6F9-DB55D498067A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,8 +13,6 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{358688A8-438D-408D-B677-A150D316DD38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{358688A8-438D-408D-B677-A150D316DD38}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6078AD07-8A9F-446A-A6F9-DB55D498067A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6078AD07-8A9F-446A-A6F9-DB55D498067A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
