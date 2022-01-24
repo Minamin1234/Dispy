@@ -9,9 +9,14 @@ import discord
 import json
 
 #CompySubData class
+#コマンドクラスDispy用のコマンド実行時に渡す補助データクラス．
+#継承すれば，様々なデータを含めてコマンドモジュール側に渡す事が出来る．
 class CData(MData):
+    #ユーザから送信されたメッセージの情報．
     msg:discord.Message = None
+    #ボットの情報
     client:discord.Client = None
+    #このデータを所有するコマンドクラス（Dispy型）
     disdev = None
     def __init__(self,newmsg:discord.Message=None,newclient:discord.Client=None,newdisdev=None):
         self.msg = newmsg
@@ -20,6 +25,7 @@ class CData(MData):
         return
 
 #DispyModule class
+#Dispyのコマンドモジュールクラス．
 class DModule(MModule):
     Disbot:discord.Client = None
     msg:discord.Message = None
@@ -29,6 +35,7 @@ class DModule(MModule):
         return
 
 #DispyDeveloper module
+#Dispyの開発者用コマンドが含まれるコマンドモジュール．
 class DDev(DModule):
     def __init__(self,disbot:discord.Client) -> void:
         super().__init__()
@@ -69,6 +76,7 @@ class DDev(DModule):
         return result
 
 #DispyData class
+#Dispyのサーバー情報を格納するデータクラス．
 class DData(object):
     Server_Name:str = "server"
     Server_Id:int = 0
@@ -80,6 +88,7 @@ class DData(object):
         self.Server_DefaultChannel_Id = SChannelId
         return
 
+    #データを辞書型に変換して返します．
     def ToDict(self) -> dict:
         dc:dict = {"Server_Name":self.Server_Name,
               "Server_Id":self.Server_Id,
@@ -87,18 +96,23 @@ class DData(object):
               }
         return dc
 
+    #未定義
     def ToJSON(self) -> bool:
         return True
 
 #'M'inamin's'Dis'cordbotOn'Py'thon class
+#discordボットでコマンド機能を提供する為のコマンドクラス．
 class MDispy(MCommand):
+    #ユーザから送信されたメッセージ情報．
     msg:discord.Message = None
+    #ボットが所属しているサーバー情報
     Datas:List[DData] = []
     def __init__(self) -> void:
         super().__init__()
         client = discord.Client()
         return
 
+    #メッセージ情報を登録します．
     def SetMsg(self,newmsg:discord.Message):
         self.msg = newmsg
         for module in self.Modules:
@@ -106,13 +120,15 @@ class MDispy(MCommand):
                 module.msg = newmsg
         return
 
-#DataControl
+#DataControl　データを操作するための関数
+    #サーバIDからデータを検索します．合致したサーバ情報を返します．
     def Search(self,SId:int) -> DData:
         for data in self.Datas:
             if data.Server_Id == Sid:
                 return data
         return None
 
+    #新たにサーバ情報を新規追加します．
     def AddNewData(self,newSName:str,newSId:int,newSChannelId:int) -> bool:
         for data in self.Datas:
             if data.Server_Id == data:
@@ -121,6 +137,7 @@ class MDispy(MCommand):
         self.Datas.append(newdata)
         return True
 
+    #指定したサーバIDの出力チャンネルを指定したチャンネルIDに設定します．
     def SetNewData(self,TargetSId:int,newSChId:int) -> bool:
         for data in self.Datas:
             if data.Server_Id == TargetSId:
@@ -128,6 +145,7 @@ class MDispy(MCommand):
                 return True
         return False
 
+    #JSONファイルからサーバ情報を取得し，データリストに格納します．
     def LoadDataListFromJSON(self,path:str) -> bool:
         datas:dict = {}
         self.Datas = []
@@ -143,6 +161,7 @@ class MDispy(MCommand):
             self.Datas.append(newdata)
         return True
 
+    #データをJSON形式で保存します．
     def Save(self,path:str) -> bool:
         datas:dict = {}
         idx:int = 0
@@ -153,6 +172,8 @@ class MDispy(MCommand):
             json.dump(datas,f,ensure_ascii=False)
         return True
 
+    #初期化用にボットが所属しているサーバを取得し，規定のチャンネルに出力させます．
+    #規定では先頭にある「テキストチャンネル」に設定されます．
     def InitializeCollect(self,client:discord.Client) -> bool:
         firstch:discord.TextChannel = None
         #print(self.Datas)
