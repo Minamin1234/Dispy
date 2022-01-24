@@ -1,12 +1,17 @@
 from typing import NoReturn as void
 from typing import List
 from discord.channel import TextChannel
-
 from discord.client import Client
 from Compy import MCommand
 from Compy import MModule
+from Compy import MData
 import discord
 import json
+
+#CompySubData class
+class CData(MData):
+    def __init__(self):
+        return
 
 class DModule(MModule):
     Disbot:discord.Client = None
@@ -16,6 +21,7 @@ class DModule(MModule):
         self.ModuleName = "dmodule"
         return
 
+#DispyDeveloper module
 class DDev(DModule):
     def __init__(self,disbot:discord.Client) -> void:
         super().__init__()
@@ -53,6 +59,7 @@ class DDev(DModule):
             result = self.ShowHelp()
         return result
 
+#DispyData class
 class DData(object):
     Server_Name:str = "server"
     Server_Id:int = 0
@@ -74,7 +81,7 @@ class DData(object):
     def ToJSON(self) -> bool:
         return True
 
-
+#'M'inamin's'Dis'cordbotOn'Py'thon class
 class MDispy(MCommand):
     msg:discord.Message = None
     Datas:List[DData] = []
