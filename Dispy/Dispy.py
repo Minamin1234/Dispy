@@ -10,9 +10,16 @@ import json
 
 #CompySubData class
 class CData(MData):
-    def __init__(self):
+    msg:discord.Message = None
+    client:discord.Client = None
+    disdev = None
+    def __init__(self,newmsg:discord.Message=None,newclient:discord.Client=None,newdisdev=None):
+        self.msg = newmsg
+        self.client = newclient
+        self.disdev = newdisdev
         return
 
+#DispyModule class
 class DModule(MModule):
     Disbot:discord.Client = None
     msg:discord.Message = None
@@ -37,7 +44,7 @@ class DDev(DModule):
             ]
         return
 
-    def ExecuteCommand(self,args:List[str]) -> str:
+    def ExecuteCommand(self,args:List[str],data:MData) -> str:
         result:str = ""
         if args[1] == self.Commands[0]:
             #dev.send([text])
@@ -52,8 +59,10 @@ class DDev(DModule):
             #dev.stop()
             result = "stop..."
         elif args[1] == self.Commands[4]:
-            #dev.setoutput([channnel_Id])
-            pass
+            #dev.setoutput()
+            data.disdev.SetNewData(data.msg.guild.id,
+                            data.msg.channel.id)
+            result = "Set Output Channel: " + str(data.msg.guild) + " - " + str(data.msg.channel)
         elif args[1] == self.Commands[5]:
             #dev.help()
             result = self.ShowHelp()
