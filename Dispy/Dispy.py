@@ -48,8 +48,28 @@ class DDev(DModule):
             result = self.ShowHelp()
         return result
 
+class DData(object):
+    Server_Name:str = "server"
+    Server_Id:int = 0
+    Server_DefaultChannel_Id:int = 0
+
+    def __init__(self,SName:str,SId:int,SChannelId:int) -> void:
+        self.Server_Name = SName
+        self.Server_Id = SId
+        self.Server_DefaultChannel_Id = SChannelId
+        return
+
+    def ToDict(self) -> dict:
+        dc:dict = {"Server_Name":self.Server_Name,
+              "Server_Id":self.Server_Id,
+              "Server_DefaultChannel_Id":self.Server_DefaultChannel_Id
+              }
+        return dc
+
+
 class MDispy(MCommand):
     msg:discord.Message = None
+    Datas:List[DData] = []
     def __init__(self) -> void:
         super().__init__()
         client = discord.Client()
@@ -62,3 +82,16 @@ class MDispy(MCommand):
                 module.msg = newmsg
         return
 
+    def Search(self,SId:int) -> DData:
+        for data in self.Datas:
+            if data.Server_Id == Sid:
+                return data
+        return None
+
+    def AddNewData(self,newSName:str,newSId:int,newSChannelId:int) -> bool:
+        for data in self.Datas:
+            if data.Server_Id == data:
+                return False
+        newdata = DData(newSName,newSId,newSChannelId)
+        self.Datas.append(newdata)
+        return True

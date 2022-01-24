@@ -15,6 +15,7 @@ CommandDevice.IncludeNewModule(ddev)
 @client.event
 async def on_ready():
     print("Active.")
+    print(client.guilds)
 
 @client.event
 async def on_message(message):
