@@ -49,4 +49,4 @@ async def on_message(message):
         await message.channel.send(">>" + str(result))
 
 client.run(Token)
-print(CommandDevice.Save(Path))
+CommandDevice.Save(Path)
