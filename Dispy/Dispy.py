@@ -1,10 +1,12 @@
 from typing import NoReturn as void
 from typing import List
+from discord.channel import TextChannel
 
 from discord.client import Client
 from Compy import MCommand
 from Compy import MModule
 import discord
+import json
 
 class DModule(MModule):
     Disbot:discord.Client = None
@@ -24,6 +26,7 @@ class DDev(DModule):
             "sendall",
             "sendto",
             "stop",
+            "setoutput",
             "help"
             ]
         return
@@ -42,8 +45,10 @@ class DDev(DModule):
         elif args[1] == self.Commands[3]:
             #dev.stop()
             result = "stop..."
-            self.Disbot.loop.stop()
         elif args[1] == self.Commands[4]:
+            #dev.setoutput([channnel_Id])
+            pass
+        elif args[1] == self.Commands[5]:
             #dev.help()
             result = self.ShowHelp()
         return result
@@ -66,6 +71,9 @@ class DData(object):
               }
         return dc
 
+    def ToJSON(self) -> bool:
+        return True
+
 
 class MDispy(MCommand):
     msg:discord.Message = None
@@ -82,6 +90,7 @@ class MDispy(MCommand):
                 module.msg = newmsg
         return
 
+#DataControl
     def Search(self,SId:int) -> DData:
         for data in self.Datas:
             if data.Server_Id == Sid:
@@ -95,3 +104,46 @@ class MDispy(MCommand):
         newdata = DData(newSName,newSId,newSChannelId)
         self.Datas.append(newdata)
         return True
+
+    def SetNewData(self,TargetSId:int,newSChId:int) -> bool:
+        for data in self.Datas:
+            if data.Server_Id == TargetSId:
+                data.Server_DefaultChannel_Id = newSChId
+                return True
+        return False
+
+    def LoadDataListFromJSON(self,path:str) -> bool:
+        datas:dict = {}
+        self.Datas = []
+        try:
+            with open(path,"r") as f:
+                datas = json.load(f)
+        except FileNotFoundError:
+            return False
+        for data in datas.values():
+            newdata:DData = DData(str(data["Server_Name"]),
+                                  int(data["Server_Id"]),
+                                  int(data["Server_DefaultChannel_Id"]))
+            self.Datas.append(newdata)
+        return True
+
+    def Save(self,path:str) -> bool:
+        datas:dict = {}
+        idx:int = 0
+        for data in self.Datas:
+            datas[str(idx)] = data.ToDict()
+            idx += 1
+        with open(path,"w") as f:
+            json.dump(datas,f,ensure_ascii=False)
+        return True
+
+    def InitializeCollect(self,client:discord.Client) -> bool:
+        firstch:discord.TextChannel = None
+        #print(self.Datas)
+        for server in client.guilds:
+            for ch in server.channels:
+                if type(ch) is discord.TextChannel:
+                    firstch = ch
+                    break
+            newdata = DData(server.name,server.id,firstch.id)
+            self.Datas.append(newdata)
