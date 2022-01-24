@@ -47,6 +47,7 @@ class DDev(DModule):
             "sendto",
             "stop",
             "setoutput",
+            "showallguilds"
             "help"
             ]
         return
@@ -71,6 +72,8 @@ class DDev(DModule):
                             data.msg.channel.id)
             result = "Set Output Channel: " + str(data.msg.guild) + " - " + str(data.msg.channel)
         elif args[1] == self.Commands[5]:
+            pass
+        elif args[1] == self.Commands[6]:
             #dev.help()
             result = self.ShowHelp()
         return result
