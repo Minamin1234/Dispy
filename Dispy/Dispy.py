@@ -1,4 +1,4 @@
-from typing import NoReturn as void
+ï»¿from typing import NoReturn as void
 from typing import List
 from discord.channel import TextChannel
 from discord.client import Client
@@ -9,14 +9,14 @@ import discord
 import json
 
 #CompySubData class
-#ƒRƒ}ƒ“ƒhƒNƒ‰ƒXDispy—p‚ÌƒRƒ}ƒ“ƒhŽÀsŽž‚É“n‚·•â•ƒf[ƒ^ƒNƒ‰ƒXD
-#Œp³‚·‚ê‚ÎC—lX‚Èƒf[ƒ^‚ðŠÜ‚ß‚ÄƒRƒ}ƒ“ƒhƒ‚ƒWƒ…[ƒ‹‘¤‚É“n‚·Ž–‚ªo—ˆ‚éD
+#ã‚³ãƒžãƒ³ãƒ‰ã‚¯ãƒ©ã‚¹Dispyç”¨ã®ã‚³ãƒžãƒ³ãƒ‰å®Ÿè¡Œæ™‚ã«æ¸¡ã™è£œåŠ©ãƒ‡ãƒ¼ã‚¿ã‚¯ãƒ©ã‚¹ï¼Ž
+#ç¶™æ‰¿ã™ã‚Œã°ï¼Œæ§˜ã€…ãªãƒ‡ãƒ¼ã‚¿ã‚’å«ã‚ã¦ã‚³ãƒžãƒ³ãƒ‰ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«å´ã«æ¸¡ã™äº‹ãŒå‡ºæ¥ã‚‹ï¼Ž
 class CData(MData):
-    #ƒ†[ƒU‚©‚ç‘—M‚³‚ê‚½ƒƒbƒZ[ƒW‚Ìî•ñD
+    #ãƒ¦ãƒ¼ã‚¶ã‹ã‚‰é€ä¿¡ã•ã‚ŒãŸãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®æƒ…å ±ï¼Ž
     msg:discord.Message = None
-    #ƒ{ƒbƒg‚Ìî•ñ
+    #ãƒœãƒƒãƒˆã®æƒ…å ±
     client:discord.Client = None
-    #‚±‚Ìƒf[ƒ^‚ðŠ—L‚·‚éƒRƒ}ƒ“ƒhƒNƒ‰ƒXiDispyŒ^j
+    #ã“ã®ãƒ‡ãƒ¼ã‚¿ã‚’æ‰€æœ‰ã™ã‚‹ã‚³ãƒžãƒ³ãƒ‰ã‚¯ãƒ©ã‚¹ï¼ˆDispyåž‹ï¼‰
     disdev = None
     def __init__(self,newmsg:discord.Message=None,newclient:discord.Client=None,newdisdev=None):
         self.msg = newmsg
@@ -25,7 +25,7 @@ class CData(MData):
         return
 
 #DispyModule class
-#Dispy‚ÌƒRƒ}ƒ“ƒhƒ‚ƒWƒ…[ƒ‹ƒNƒ‰ƒXD
+#Dispyã®ã‚³ãƒžãƒ³ãƒ‰ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã‚¯ãƒ©ã‚¹ï¼Ž
 class DModule(MModule):
     Disbot:discord.Client = None
     msg:discord.Message = None
@@ -35,7 +35,7 @@ class DModule(MModule):
         return
 
 #DispyDeveloper module
-#Dispy‚ÌŠJ”­ŽÒ—pƒRƒ}ƒ“ƒh‚ªŠÜ‚Ü‚ê‚éƒRƒ}ƒ“ƒhƒ‚ƒWƒ…[ƒ‹D
+#Dispyã®é–‹ç™ºè€…ç”¨ã‚³ãƒžãƒ³ãƒ‰ãŒå«ã¾ã‚Œã‚‹ã‚³ãƒžãƒ³ãƒ‰ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ï¼Ž
 class DDev(DModule):
     def __init__(self,disbot:discord.Client) -> void:
         super().__init__()
@@ -47,7 +47,7 @@ class DDev(DModule):
             "sendto",
             "stop",
             "setoutput",
-            "showallguilds"
+            "showallguilds",
             "help"
             ]
         return
@@ -72,14 +72,18 @@ class DDev(DModule):
                             data.msg.channel.id)
             result = "Set Output Channel: " + str(data.msg.guild) + " - " + str(data.msg.channel)
         elif args[1] == self.Commands[5]:
-            pass
+            #dev.showallguilds()
+            result += "----------Guilds----------" + "\n"
+            for server in data.client.guilds:
+                result += server.name + " ID:" + str(server.id) + "\n"
+            result += "----------End----------" + "\n"
         elif args[1] == self.Commands[6]:
             #dev.help()
             result = self.ShowHelp()
         return result
 
 #DispyData class
-#Dispy‚ÌƒT[ƒo[î•ñ‚ðŠi”[‚·‚éƒf[ƒ^ƒNƒ‰ƒXD
+#Dispyã®ã‚µãƒ¼ãƒãƒ¼æƒ…å ±ã‚’æ ¼ç´ã™ã‚‹ãƒ‡ãƒ¼ã‚¿ã‚¯ãƒ©ã‚¹ï¼Ž
 class DData(object):
     Server_Name:str = "server"
     Server_Id:int = 0
@@ -91,7 +95,7 @@ class DData(object):
         self.Server_DefaultChannel_Id = SChannelId
         return
 
-    #ƒf[ƒ^‚ðŽ«‘Œ^‚É•ÏŠ·‚µ‚Ä•Ô‚µ‚Ü‚·D
+    #ãƒ‡ãƒ¼ã‚¿ã‚’è¾žæ›¸åž‹ã«å¤‰æ›ã—ã¦è¿”ã—ã¾ã™ï¼Ž
     def ToDict(self) -> dict:
         dc:dict = {"Server_Name":self.Server_Name,
               "Server_Id":self.Server_Id,
@@ -99,23 +103,23 @@ class DData(object):
               }
         return dc
 
-    #–¢’è‹`
+    #æœªå®šç¾©
     def ToJSON(self) -> bool:
         return True
 
 #'M'inamin's'Dis'cordbotOn'Py'thon class
-#discordƒ{ƒbƒg‚ÅƒRƒ}ƒ“ƒh‹@”\‚ð’ñ‹Ÿ‚·‚éˆ×‚ÌƒRƒ}ƒ“ƒhƒNƒ‰ƒXD
+#discordãƒœãƒƒãƒˆã§ã‚³ãƒžãƒ³ãƒ‰æ©Ÿèƒ½ã‚’æä¾›ã™ã‚‹ç‚ºã®ã‚³ãƒžãƒ³ãƒ‰ã‚¯ãƒ©ã‚¹ï¼Ž
 class MDispy(MCommand):
-    #ƒ†[ƒU‚©‚ç‘—M‚³‚ê‚½ƒƒbƒZ[ƒWî•ñD
+    #ãƒ¦ãƒ¼ã‚¶ã‹ã‚‰é€ä¿¡ã•ã‚ŒãŸãƒ¡ãƒƒã‚»ãƒ¼ã‚¸æƒ…å ±ï¼Ž
     msg:discord.Message = None
-    #ƒ{ƒbƒg‚ªŠ‘®‚µ‚Ä‚¢‚éƒT[ƒo[î•ñ
+    #ãƒœãƒƒãƒˆãŒæ‰€å±žã—ã¦ã„ã‚‹ã‚µãƒ¼ãƒãƒ¼æƒ…å ±
     Datas:List[DData] = []
     def __init__(self) -> void:
         super().__init__()
         client = discord.Client()
         return
 
-    #ƒƒbƒZ[ƒWî•ñ‚ð“o˜^‚µ‚Ü‚·D
+    #ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸æƒ…å ±ã‚’ç™»éŒ²ã—ã¾ã™ï¼Ž
     def SetMsg(self,newmsg:discord.Message):
         self.msg = newmsg
         for module in self.Modules:
@@ -123,15 +127,15 @@ class MDispy(MCommand):
                 module.msg = newmsg
         return
 
-#DataControl@ƒf[ƒ^‚ð‘€ì‚·‚é‚½‚ß‚ÌŠÖ”
-    #ƒT[ƒoID‚©‚çƒf[ƒ^‚ðŒŸõ‚µ‚Ü‚·D‡’v‚µ‚½ƒT[ƒoî•ñ‚ð•Ô‚µ‚Ü‚·D
+#DataControlã€€ãƒ‡ãƒ¼ã‚¿ã‚’æ“ä½œã™ã‚‹ãŸã‚ã®é–¢æ•°
+    #ã‚µãƒ¼ãƒIDã‹ã‚‰ãƒ‡ãƒ¼ã‚¿ã‚’æ¤œç´¢ã—ã¾ã™ï¼Žåˆè‡´ã—ãŸã‚µãƒ¼ãƒæƒ…å ±ã‚’è¿”ã—ã¾ã™ï¼Ž
     def Search(self,SId:int) -> DData:
         for data in self.Datas:
             if data.Server_Id == Sid:
                 return data
         return None
 
-    #V‚½‚ÉƒT[ƒoî•ñ‚ðV‹K’Ç‰Á‚µ‚Ü‚·D
+    #æ–°ãŸã«ã‚µãƒ¼ãƒæƒ…å ±ã‚’æ–°è¦è¿½åŠ ã—ã¾ã™ï¼Ž
     def AddNewData(self,newSName:str,newSId:int,newSChannelId:int) -> bool:
         for data in self.Datas:
             if data.Server_Id == data:
@@ -140,7 +144,7 @@ class MDispy(MCommand):
         self.Datas.append(newdata)
         return True
 
-    #Žw’è‚µ‚½ƒT[ƒoID‚Ìo—Íƒ`ƒƒƒ“ƒlƒ‹‚ðŽw’è‚µ‚½ƒ`ƒƒƒ“ƒlƒ‹ID‚ÉÝ’è‚µ‚Ü‚·D
+    #æŒ‡å®šã—ãŸã‚µãƒ¼ãƒIDã®å‡ºåŠ›ãƒãƒ£ãƒ³ãƒãƒ«ã‚’æŒ‡å®šã—ãŸãƒãƒ£ãƒ³ãƒãƒ«IDã«è¨­å®šã—ã¾ã™ï¼Ž
     def SetNewData(self,TargetSId:int,newSChId:int) -> bool:
         for data in self.Datas:
             if data.Server_Id == TargetSId:
@@ -148,7 +152,7 @@ class MDispy(MCommand):
                 return True
         return False
 
-    #JSONƒtƒ@ƒCƒ‹‚©‚çƒT[ƒoî•ñ‚ðŽæ“¾‚µCƒf[ƒ^ƒŠƒXƒg‚ÉŠi”[‚µ‚Ü‚·D
+    #JSONãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ã‚µãƒ¼ãƒæƒ…å ±ã‚’å–å¾—ã—ï¼Œãƒ‡ãƒ¼ã‚¿ãƒªã‚¹ãƒˆã«æ ¼ç´ã—ã¾ã™ï¼Ž
     def LoadDataListFromJSON(self,path:str) -> bool:
         datas:dict = {}
         self.Datas = []
@@ -164,7 +168,7 @@ class MDispy(MCommand):
             self.Datas.append(newdata)
         return True
 
-    #ƒf[ƒ^‚ðJSONŒ`Ž®‚Å•Û‘¶‚µ‚Ü‚·D
+    #ãƒ‡ãƒ¼ã‚¿ã‚’JSONå½¢å¼ã§ä¿å­˜ã—ã¾ã™ï¼Ž
     def Save(self,path:str) -> bool:
         datas:dict = {}
         idx:int = 0
@@ -175,8 +179,8 @@ class MDispy(MCommand):
             json.dump(datas,f,ensure_ascii=False)
         return True
 
-    #‰Šú‰»—p‚Éƒ{ƒbƒg‚ªŠ‘®‚µ‚Ä‚¢‚éƒT[ƒo‚ðŽæ“¾‚µC‹K’è‚Ìƒ`ƒƒƒ“ƒlƒ‹‚Éo—Í‚³‚¹‚Ü‚·D
-    #‹K’è‚Å‚Íæ“ª‚É‚ ‚éuƒeƒLƒXƒgƒ`ƒƒƒ“ƒlƒ‹v‚ÉÝ’è‚³‚ê‚Ü‚·D
+    #åˆæœŸåŒ–ç”¨ã«ãƒœãƒƒãƒˆãŒæ‰€å±žã—ã¦ã„ã‚‹ã‚µãƒ¼ãƒã‚’å–å¾—ã—ï¼Œè¦å®šã®ãƒãƒ£ãƒ³ãƒãƒ«ã«å‡ºåŠ›ã•ã›ã¾ã™ï¼Ž
+    #è¦å®šã§ã¯å…ˆé ­ã«ã‚ã‚‹ã€Œãƒ†ã‚­ã‚¹ãƒˆãƒãƒ£ãƒ³ãƒãƒ«ã€ã«è¨­å®šã•ã‚Œã¾ã™ï¼Ž
     def InitializeCollect(self,client:discord.Client) -> bool:
         firstch:discord.TextChannel = None
         #print(self.Datas)

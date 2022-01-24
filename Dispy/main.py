@@ -33,7 +33,9 @@ async def on_message(message):
         result:str = CommandDevice.Execute(word,data)
         if args[0] == "dev":
             if message.author.id != Developer_Id:
-                await message.channel.send("Can't execute command: Developer Only")
+                text = "Can't execute command: Developer Only\n"
+                text += "あなたは開発者権限がないため，このコマンドは実行できません．"
+                await message.channel.send(text)
                 return
             if args[1] == "send":
                 await message.channel.send(str(args[2]))
