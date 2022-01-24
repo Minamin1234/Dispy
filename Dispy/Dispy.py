@@ -8,6 +8,8 @@ from Compy import MData
 import discord
 import json
 
+Version:str = "v1.0beta"
+
 #CompySubData class
 #コマンドクラスDispy用のコマンド実行時に渡す補助データクラス．
 #継承すれば，様々なデータを含めてコマンドモジュール側に渡す事が出来る．
