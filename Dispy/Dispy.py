@@ -5,6 +5,7 @@ from discord.client import Client
 from Compy import MCommand
 from Compy import MModule
 from Compy import MData
+from Compy import MResult
 import discord
 import json
 

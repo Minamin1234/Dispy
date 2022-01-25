@@ -1,4 +1,5 @@
 import discord
+from Compy import MResult
 from Dispy import MDispy
 from Dispy import DDev
 from Dispy import CData
@@ -30,7 +31,8 @@ async def on_message(message):
         word:str = message.content.lstrip(CommandWord)
         args:List[str] = CommandDevice.DecodeArgs(word)
         CommandDevice.SetMsg(message)
-        result:str = CommandDevice.Execute(word,data)
+        rresult:MResult = CommandDevice.Execute(word,data)
+        result:str = rresult.Result
         if args[0] == "dev":
             if message.author.id != Developer_Id:
                 text = "Can't execute command: Developer Only\n"
@@ -49,7 +51,7 @@ async def on_message(message):
                 await client.close()
                 return
             elif args[1] == "help":
-                result = CommandDevice.Execute(word,data)
+                result = CommandDevice.Execute(word,data).Result
         await message.channel.send(">>" + str(result))
 
 client.run(Token)
