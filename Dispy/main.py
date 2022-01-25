@@ -31,8 +31,11 @@ async def on_message(message):
         word:str = message.content.lstrip(CommandWord)
         args:List[str] = CommandDevice.DecodeArgs(word)
         CommandDevice.SetMsg(message)
-        rresult:MResult = CommandDevice.Execute(word,data)
-        result:str = rresult.Result
+        cresult:CResult = CommandDevice.Execute(word,data)
+        dtxchId:int = CommandDevice.Search(message.guild.id).Server_DefaultChannel_Id
+        cresult.TxtChannel = client.get_channel(dtxchId)
+        result:str = cresult.Result
+        print(type(cresult))
         if args[0] == "dev":
             if message.author.id != Developer_Id:
                 text = "Can't execute command: Developer Only\n"
@@ -43,16 +46,24 @@ async def on_message(message):
                 await message.channel.send(str(args[2]))
                 return
             elif args[1] == "sendall":
+                for tch in cresult.TxtChannels:
+                    await tch.send(str(args[2]))
                 return
             elif args[1] == "sendto":
-                return
+                pass
             elif args[1] == "stop":
                 await message.channel.send(">>" + str(result))
                 await client.close()
                 return
             elif args[1] == "help":
                 result = CommandDevice.Execute(word,data).Result
+
+            await cresult.TxtChannel.send(result)
+            return
+        
+        cresult.TxtChannel = client.get_channel(dtxchId)
         await message.channel.send(">>" + str(result))
+        
 
 client.run(Token)
 CommandDevice.Save(Path)
