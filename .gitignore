@@ -5,6 +5,7 @@
 
 # セキュリティ面で公開してはならないファイル
 Private.json
+Data.json
 
 # User-specific files
 *.rsuser
