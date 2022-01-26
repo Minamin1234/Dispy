@@ -42,6 +42,7 @@ async def on_message(message):
                 text += "あなたは開発者権限がないため，このコマンドは実行できません．"
                 await message.channel.send(text)
                 return
+
             if args[1] == "send":
                 await message.channel.send(str(args[2]))
                 return
@@ -60,9 +61,8 @@ async def on_message(message):
 
             await cresult.TxtChannel.send(result)
             return
-        
-        cresult.TxtChannel = client.get_channel(dtxchId)
-        await message.channel.send(">>" + str(result))
+
+        await cresult.TxtChannel.send(result)
         
 
 client.run(Token)
