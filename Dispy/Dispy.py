@@ -5,10 +5,25 @@ from discord.client import Client
 from Compy import MCommand
 from Compy import MModule
 from Compy import MData
+from Compy import MResult
 import discord
 import json
 
+#Dispy.pyのバージョン情報．
 Version:str = "v1.0beta"
+
+#CompyResult class
+class CResult(MResult):
+    #結果を返す際に送信するテキストチャンネル．
+    TxtChannel:discord.TextChannel = None
+    #全チャンネルに一斉送信をする際のチャンネルリスト．
+    TxtChannels:List[discord.TextChannel] = []
+
+    #一斉送信のチャンネルリストに指定したチャンネルを追加します．
+    def AddToChannelList(self,newtxtch:discord.TextChannel):
+        self.TxtChannels.append(newtxtch)
+        return
+    
 
 #CompySubData class
 #コマンドクラスDispy用のコマンド実行時に渡す補助データクラス．
@@ -29,7 +44,9 @@ class CData(MData):
 #DispyModule class
 #Dispyのコマンドモジュールクラス．
 class DModule(MModule):
+    #送信を受信したボットの本体．（クライアント）
     Disbot:discord.Client = None
+    #受信したメッセージ情報
     msg:discord.Message = None
 
     def __init__(self) -> void:
@@ -41,6 +58,7 @@ class DModule(MModule):
 class DDev(DModule):
     def __init__(self,disbot:discord.Client) -> void:
         super().__init__()
+        #ボット本体
         self.Disbot = disbot
         self.ModuleName = "dev"
         self.Commands = [
@@ -54,25 +72,40 @@ class DDev(DModule):
             ]
         return
 
-    def ExecuteCommand(self,args:List[str],data:MData) -> str:
+    #dataにはボット本体の情報(client)，送られてきたメッセージの情報が含まれます．
+    #CResultには実行結果を出力するテキストチャンネルを指定します．
+    def ExecuteCommand(self,args:List[str],data:MData) -> MResult:
         result:str = ""
+        cresult:CResult = CResult(result)
         if args[1] == self.Commands[0]:
             #dev.send([text])
             result = str(args[2])
+            cresult.TxtChannel = data.client.get_channel(data.msg.channel.id)
         elif args[1] == self.Commands[1]:
             #dev.sendall([text])
             result = str(args[2])
+            for s in data.client.guilds:
+                for ch in s.channels:
+                    if type(ch) is discord.TextChannel:
+                        cresult.AddToChannelList(ch)
+
         elif args[1] == self.Commands[2]:
             #dev.sendto([text],[channel_Id])
             result = str(args[2])
+            cresult.TxtChannel = data.client.get_channel(int(args[3]))
         elif args[1] == self.Commands[3]:
             #dev.stop()
             result = "stop..."
         elif args[1] == self.Commands[4]:
             #dev.setoutput()
-            data.disdev.SetNewData(data.msg.guild.id,
-                            data.msg.channel.id)
+            frag:bool = data.disdev.SetNewData(data.msg.guild.id,
+                                               data.msg.channel.id)
+            if frag == False:
+                data.disdev.AddNewData(data.msg.guild.name,
+                                       data.msg.guild.id,
+                                       data.msg.channel.id)
             result = "Set Output Channel: " + str(data.msg.guild) + " - " + str(data.msg.channel)
+            cresult.TxtChannel = data.msg.channel
         elif args[1] == self.Commands[5]:
             #dev.showallguilds()
             result += "----------Guilds----------" + "\n"
@@ -81,8 +114,9 @@ class DDev(DModule):
             result += "----------End----------" + "\n"
         elif args[1] == self.Commands[6]:
             #dev.help()
-            result = self.ShowHelp()
-        return result
+            result = self.ShowHelp().Result
+        cresult.Result = result
+        return cresult
 
 #DispyData class
 #Dispyのサーバー情報を格納するデータクラス．
@@ -133,7 +167,7 @@ class MDispy(MCommand):
     #サーバIDからデータを検索します．合致したサーバ情報を返します．
     def Search(self,SId:int) -> DData:
         for data in self.Datas:
-            if data.Server_Id == Sid:
+            if data.Server_Id == SId:
                 return data
         return None
 
