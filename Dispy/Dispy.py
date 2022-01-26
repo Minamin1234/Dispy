@@ -9,13 +9,17 @@ from Compy import MResult
 import discord
 import json
 
+#Dispy.pyのバージョン情報．
 Version:str = "v1.0beta"
 
 #CompyResult class
 class CResult(MResult):
+    #結果を返す際に送信するテキストチャンネル．
     TxtChannel:discord.TextChannel = None
+    #全チャンネルに一斉送信をする際のチャンネルリスト．
     TxtChannels:List[discord.TextChannel] = []
 
+    #一斉送信のチャンネルリストに指定したチャンネルを追加します．
     def AddToChannelList(self,newtxtch:discord.TextChannel):
         self.TxtChannels.append(newtxtch)
         return
@@ -40,7 +44,9 @@ class CData(MData):
 #DispyModule class
 #Dispyのコマンドモジュールクラス．
 class DModule(MModule):
+    #送信を受信したボットの本体．（クライアント）
     Disbot:discord.Client = None
+    #受信したメッセージ情報
     msg:discord.Message = None
 
     def __init__(self) -> void:
@@ -52,6 +58,7 @@ class DModule(MModule):
 class DDev(DModule):
     def __init__(self,disbot:discord.Client) -> void:
         super().__init__()
+        #ボット本体
         self.Disbot = disbot
         self.ModuleName = "dev"
         self.Commands = [

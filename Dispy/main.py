@@ -6,13 +6,16 @@ from Dispy import CData
 
 Developer_Id:int = 834758459349925939
 
-client = discord.Client();
+
 Token = 'ODgzMzc4MTAzNjM4OTYyMjU2.YTJD-A.6lmBAZzWQ98o6Ve9cXWkEEuxp6g'
 CommandWord:str = "!c "
+Path:str = "Data.json"
+
+client = discord.Client();
 CommandDevice:MDispy = MDispy()
 ddev:DDev = DDev(client)
 CommandDevice.IncludeNewModule(ddev)
-Path:str = "Data.json"
+
 
 
 @client.event
