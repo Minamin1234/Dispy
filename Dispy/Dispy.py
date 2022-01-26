@@ -10,7 +10,7 @@ import discord
 import json
 
 #Dispy.pyのバージョン情報．
-Version:str = "v1.0beta"
+Version:str = "v2.0beta"
 
 #CompyResult class
 class CResult(MResult):
