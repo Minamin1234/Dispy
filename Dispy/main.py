@@ -3,11 +3,15 @@ from Compy import MResult
 from Dispy import MDispy
 from Dispy import DDev
 from Dispy import CData
+import json
 
-Developer_Id:int = 834758459349925939
+PriPath:str = "Private.json"
+PriData:dict = {}
+with open(PriPath,"r") as f:
+    PriData = json.load(f)
 
-
-Token = 'ODgzMzc4MTAzNjM4OTYyMjU2.YTJD-A.6lmBAZzWQ98o6Ve9cXWkEEuxp6g'
+Developer_Id:int = int(PriData["Developer_Id"])
+Token:str = str(PriData["Token"])
 CommandWord:str = "!c "
 Path:str = "Data.json"
 
