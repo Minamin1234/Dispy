@@ -26,6 +26,7 @@
     <Compile Include="main.py" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Data.json" />
     <Content Include="Private.json" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
